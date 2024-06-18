@@ -1,7 +1,8 @@
-import { Metadata } from "next";
-import Link from "next/link";
 
-export const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
+import Link from "next/link";
+import styles from "../styles/movie.module.css"  ;
+import { API_URL } from "../constants";
+import { Metadata } from "next";
 
 async function getMovies(){
  // await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -10,12 +11,23 @@ async function getMovies(){
   return json;
 }
 
-export const metadata: Metadata = {
-  title: "Home",
-};
+ export const metadata: Metadata = {
+   title: "Home",
+ };
 
 export default async function HomePage(){
   const movies = await getMovies();
-  return <div>{movies.map(movie => <li key={movie.id}>
-    <Link href={`/movies/${movie.id}`}>{movie.title}</Link></li>)}</div>
+  return (
+  <div className={styles.container}>
+  {movies.map((movie :any) => (
+  // <li key={movie.id}>
+  //   <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+  // </li>
+    <div className={styles.movie} key={movie.id}>
+      <img src={movie.poster_path} alt={movie.title} />
+      <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+    </div>
+  ))}
+  </div>
+  );
 }
