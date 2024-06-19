@@ -1,20 +1,28 @@
 import { API_URL } from "../app/constants";
+import potato from "@/app/styles/movie-info.module.css";
 
-
-async function getMovie(id:string) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const response = await fetch(`${API_URL}/${id}`);
-    return response.json();
+export async function getMovie(id: string) {
+  const response = await fetch(`${API_URL}/${id}`);
+  return response.json();
 }
 
-export default async function MovieInfo({id}: {id:string}) {
-    const movie = await getMovie(id);
-    return <div>
-        <img src={movie.poster_path} />
-        <div>
-            <h1>{movie.title}</h1>
-            <h3>{movie.vote_average}</h3>
-            <p>{movie.overview}</p>
-        </div>
-    </div>;
+export default async function MovieInfo({ id }: { id: string }) {
+  const movie = await getMovie(id);
+  return (
+    <div className={potato.container}>
+      <img
+        src={movie.poster_path}
+        className={potato.poster}
+        alt={movie.title}
+      />
+      <div className={potato.info}>
+        <h1 className={potato.title}>{movie.title}</h1>
+        <h3>⭐️ {movie.vote_average.toFixed()}</h3>
+        <p>{movie.overview}</p>
+        <a href={movie.homepage} target={"_blank"}>
+          Homepage &rarr;
+        </a>
+      </div>
+    </div>
+  );
 }
