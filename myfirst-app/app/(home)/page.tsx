@@ -8,7 +8,7 @@ export const metadata = {
 
 // Movie 인터페이스 정의
 interface Movie {
-  id: number;
+  id: string;
   title: string;
   poster_path: string;
 }
