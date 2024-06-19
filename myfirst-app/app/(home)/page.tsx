@@ -1,8 +1,8 @@
 
-import Link from "next/link";
-import styles from "../styles/movie.module.css"  ;
 import { API_URL } from "../constants";
 import { Metadata } from "next";
+import styles from "../styles/home.module.css";
+import Movie from "@/components/movie";
 
 async function getMovies(){
  // await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -19,14 +19,12 @@ export default async function HomePage(){
   const movies = await getMovies();
   return (
   <div className={styles.container}>
-  {movies.map((movie :any) => (
+  {movies.map((movie) => (
   // <li key={movie.id}>
   //   <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
   // </li>
-    <div className={styles.movie} key={movie.id}>
-      <img src={movie.poster_path} alt={movie.title} />
-      <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
-    </div>
+    <Movie key={movie.id} id={movie.id} poster_path={movie.poster_path}
+    title={movie.title} />
   ))}
   </div>
   );
